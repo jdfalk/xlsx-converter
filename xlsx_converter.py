@@ -23,19 +23,7 @@ for root, _, files in os.walk("c:\\temp"):
         data_xls = PD.read_excel(full_path)
         data_xls.to_csv(
             target_file,
-            mode='a'
+            mode='a',
             header=False,
             index=False
         )
-
-
-
-
-# read excel file into a dataframe, declare details about the dataframe.  We assumed all default values.
-data_xls = PD.read_excel(source_file)
-data_xls.to_csv(
-    target_file,
-    mode='a',
-    header=False, 
-    index=False
-    )
