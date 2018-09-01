@@ -64,24 +64,19 @@ def main():
                     data_xls = PD.read_excel(
                         io=full_path,
                         sheet_name=int(args.sheet),
-                        skiprows=0
+                        skiprows=0,
+                        header=1
                         )
+                    data_xls.to_csv(
+                        output_file,
+                        mode='a',
+                        header=False,
+                        index=False
+                    )
                 except IndexError as err:
                     logging.error("Error occured: %s", err)
-                    logging.info("Continuing using sheet 0 for file %s", full_path)
-                    data_xls = PD.read_excel(
-                        io=full_path,
-                        sheet_name=0,
-                        skiprows=0
-                        )
+                    logging.error("Bad file %s. Skipping and continuing", full_path)
                     continue
-
-                data_xls.to_csv(
-                    output_file,
-                    mode='a',
-                    header=False,
-                    index=False
-                    )
 
 
 if __name__ == '__main__':
