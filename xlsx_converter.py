@@ -31,3 +31,10 @@ for root, _, files in os.walk("c:\\temp"):
             header=False,
             index=False
             )
+
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
