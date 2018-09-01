@@ -16,8 +16,8 @@ def main():
                         default='WARNING')
     args = parser.parse_args()
 
-    if args.output == None:
-        sys.exit("Need output file")
+    if args.output is None:
+        sys.exit("Need output file. See xlsx_converter.py --help")
 
     # assuming loglevel is bound to the string value obtained from the
     # command line argument. Convert to upper case to allow the user to
