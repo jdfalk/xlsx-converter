@@ -61,12 +61,14 @@ def main():
                 # read excel file into a dataframe, declare details about the dataframe.
                 # We assumed all default values.
                 try:
+                    # https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_excel.html
                     data_xls = PD.read_excel(
                         io=full_path,
                         sheet_name=int(args.sheet),
                         skiprows=0,
                         header=1
                         )
+                    # https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_csv.html
                     data_xls.to_csv(
                         output_file,
                         mode='a',
