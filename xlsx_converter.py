@@ -5,9 +5,6 @@ import os
 
 import pandas as PD
 
-source_file = "c:\\temp\\Book1.xlsx"
-target_file = "c:\\temp\\Book1.csv"
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -48,7 +45,7 @@ def main():
             # We assumed all default values.
             data_xls = PD.read_excel(full_path)
             data_xls.to_csv(
-                target_file,
+                args.output,
                 mode='a',
                 header=False,
                 index=False
