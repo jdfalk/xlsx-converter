@@ -2,6 +2,7 @@
 import argparse
 import logging
 import os
+import sys
 
 import pandas as PD
 
@@ -14,6 +15,9 @@ def main():
     parser.add_argument('-l', '--log-level', help='Logging level (default WARNING)',
                         default='WARNING')
     args = parser.parse_args()
+
+    if args.output == None:
+        sys.exit("Need output file")
 
     # assuming loglevel is bound to the string value obtained from the
     # command line argument. Convert to upper case to allow the user to
