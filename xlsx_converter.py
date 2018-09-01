@@ -26,4 +26,4 @@ for root, _, files in os.walk("c:\\temp"):
             mode='a',
             header=False,
             index=False
-        )
+            )
