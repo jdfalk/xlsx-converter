@@ -30,30 +30,39 @@ def main():
         format='%(asctime)s %(levelname)s:%(message)s',
         datefmt='%m/%d/%Y %I:%M:%S %p')
 
+    # converting the path this program receives to
+    # what python understands
+    output_file = os.path.abspath(args.output)
     # sets the header row of the output file
-    with open(args.output) as f:
+    # added mode="a"because default mode is r
+    # r = read only
+    with open(output_file, mode="a") as f:
         f.write("column1,column2,column3\n")
 
     # looks at a specific directory, and exports the files into a list with the full path
     # after the word "for" it declares
     for root, _, files in os.walk(args.dir):
         for file in files:
-            # declares the meaning of variable "full_path" used in this code
-            full_path = os.path.join(root, file)
-            # adding logging.debug allows the program to print the list if you want
-            # to see it when you enable debug logging on the program "full_path is: "
-            # is a string that displays the variable "full_path" and the added characters "is: "
-            # logging.debug uses c style formatting, the %s defines whatever goes there as a string.
-            logging.debug("full_path is: %s", full_path)
-            # read excel file into a dataframe, declare details about the dataframe.
-            # We assumed all default values.
-            data_xls = PD.read_excel(full_path)
-            data_xls.to_csv(
-                args.output,
-                mode='a',
-                header=False,
-                index=False
-                )
+            if file.endswith(".xls", ".xlsx"):
+                # declares the meaning of variable "full_path" used in this code
+                full_path = os.path.join(root, file)
+                # adding logging.debug allows the program to print the list if you want
+                # to see it when you enable debug logging on
+                # the program "full_path is: "
+                # is a string that displays the variable "full_path" and
+                # the added characters "is: "
+                # logging.debug uses c style formatting, the %s defines
+                # whatever goes there as a string.
+                logging.debug("full_path is: %s", full_path)
+                # read excel file into a dataframe, declare details about the dataframe.
+                # We assumed all default values.
+                data_xls = PD.read_excel(full_path)
+                data_xls.to_csv(
+                    output_file,
+                    mode='a',
+                    header=False,
+                    index=False
+                    )
 
 
 if __name__ == '__main__':
