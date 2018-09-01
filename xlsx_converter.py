@@ -12,6 +12,8 @@ def main():
     parser.add_argument(
         '-d', '--dir', help='Directory to start in', default=os.getcwd())
     parser.add_argument('-o', '--output', help='File path and name for output')
+    parser.add_argument('-e', '--header', help='Header row for file', default="foo,bar")
+    parser.add_argument('-s', '--sheet', help='Identify Sheet in spreadsheet')
     parser.add_argument('-l', '--log-level', help='Logging level (default WARNING)',
                         default='WARNING')
     args = parser.parse_args()
@@ -33,17 +35,19 @@ def main():
     # converting the path this program receives to
     # what python understands
     output_file = os.path.abspath(args.output)
+    header = args.header + "\n"
+
     # sets the header row of the output file
     # added mode="a"because default mode is r
     # r = read only
     with open(output_file, mode="a") as f:
-        f.write("column1,column2,column3\n")
+        f.write(header)
 
     # looks at a specific directory, and exports the files into a list with the full path
     # after the word "for" it declares
     for root, _, files in os.walk(args.dir):
         for file in files:
-            if file.endswith(".xls", ".xlsx"):
+            if file.endswith((".xls", ".xlsx")):
                 # declares the meaning of variable "full_path" used in this code
                 full_path = os.path.join(root, file)
                 # adding logging.debug allows the program to print the list if you want
@@ -56,7 +60,11 @@ def main():
                 logging.debug("full_path is: %s", full_path)
                 # read excel file into a dataframe, declare details about the dataframe.
                 # We assumed all default values.
-                data_xls = PD.read_excel(full_path)
+                data_xls = PD.read_excel(
+                    io=full_path,
+                    sheet_name=int(args.sheet),
+                    # skiprows=0
+                    )
                 data_xls.to_csv(
                     output_file,
                     mode='a',
