@@ -1,4 +1,5 @@
 # XLSX Converter
+import argparse
 import logging
 import os
 
@@ -34,7 +35,23 @@ for root, _, files in os.walk("c:\\temp"):
 
 
 def main():
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-d', '--dir', help='Directory to start in', default=os.getcwd())
+    parser.add_argument('-l', '--log-level', help='Logging level (default WARNING)',
+                        default='WARNING')
+    args = parser.parse_args()
+    
+    # assuming loglevel is bound to the string value obtained from the
+    # command line argument. Convert to upper case to allow the user to
+    # specify --log=DEBUG or --log=debug
+    numeric_level = getattr(logging, args.log_level.upper(), None)
+    if not isinstance(numeric_level, int):
+        raise ValueError('Invalid log level: %s' % args.log_level)
+    logging.basicConfig(
+        level=numeric_level,
+        format='%(asctime)s %(levelname)s:%(message)s',
+        datefmt='%m/%d/%Y %I:%M:%S %p')
 
 if __name__ == '__main__':
     main()
